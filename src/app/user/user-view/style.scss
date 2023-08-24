@@ -1,0 +1,29 @@
+@import "src/index.scss";
+
+.account-profile-pics {
+    div {
+        .profile-pics-upload-icon {
+            display: none !important;
+        }
+    }
+
+    &:hover {
+        div {
+            .profile-pics-upload-icon {
+                display: grid !important;
+            }
+        }
+    }
+}
+
+.account-data-container {
+    @media (max-width: 330px) {
+        width: 100% !important;
+    }
+}
+
+.account-data-icon {
+    flex-grow: 0;
+    flex-basis: auto;
+    flex-shrink: 0;
+}
