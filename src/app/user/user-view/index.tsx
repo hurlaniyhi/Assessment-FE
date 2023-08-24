@@ -2,7 +2,7 @@ import './style.scss'
 import { useState } from 'react'
 import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
-import { AbsoluteContainer, AppSpan, AppTitle, Button, CustomContainer, Form, FormGroup, GridContainer } from 'src/style'
+import { AbsoluteContainer, AppTitle, Button, CustomContainer, GridContainer } from 'src/style'
 import { AddDetails, UserDetails } from 'src/component'
 import { FiLogOut } from 'react-icons/fi'
 

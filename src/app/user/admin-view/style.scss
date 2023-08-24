@@ -1,0 +1,25 @@
+@import "src/index.scss";
+
+.user-name-wrapper {
+    &:hover {
+        background-color: #E7F6F5;
+        border-color: #0D968F;
+
+        span, p {
+            cursor: pointer;
+            color: #085B56
+        }
+    }
+}
+
+.user-list-content-wrapper {
+    height: 90% !important;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    transition: all .2s;
+
+    &::-webkit-scrollbar {
+        display: none
+    }
+}

@@ -9,7 +9,7 @@ const Home: React.FC = () => {
     return (
         <>
             <p>Dashboard Home screen</p>
-            <p onClick={() => navigate('/user/screen-2')}>Next Screen</p>
+            <p>Next Screen</p>
         </>
     );
 }
