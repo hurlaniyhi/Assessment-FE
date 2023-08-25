@@ -32,8 +32,8 @@ export const AppInfoProvider = (props: any) => {
     async function recoverAppData () {
         for (let item of Object.keys(initialState)) {
             let retrievedData = await localStorage.getItem(item)!
-            retrievedData = ['number', 'string'].includes(typeof state[item]) ? retrievedData : ( !['null', 'undefined'].includes(retrievedData) ? JSON.parse(retrievedData): state[item])
-            await setInfoProperty(item, retrievedData)
+            retrievedData = (['null', 'undefined', 'NaN'].includes(retrievedData) ? state[item] : ['number', 'string'].includes(typeof state[item]) ? retrievedData : JSON.parse(retrievedData))
+            await setInfoProperty(item, typeof state[item] === 'number' ? Number(retrievedData) : retrievedData)
         }
     }
 

@@ -10,7 +10,7 @@ import { FiLogOut } from 'react-icons/fi'
 import { IUserData } from '@src/model'
 
 
-const UserView: React.FC = () => {
+export const UserView: React.FC = () => {
     const navigate = useNavigate()
     const {API} = useContext(ApiContext)
     const {info: {userData}, logout} = useContext(AppInfoContext)
@@ -96,4 +96,4 @@ const UserView: React.FC = () => {
     )       
 }
 
-export default utility.routeData('user-view', 'UserView', <UserView/>)
+// export default utility.routeData('user-view', 'UserView', <UserView/>)

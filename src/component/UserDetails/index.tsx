@@ -6,6 +6,7 @@ import HandIcon from 'src/assets/svg/hand-icon'
 import { countFormat } from "src/utils/utility"
 
 export const UserDetails: React.FC<any> = ({data}) => {
+    
     return (
         <GridContainer>
             <Circle 

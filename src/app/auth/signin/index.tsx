@@ -1,5 +1,5 @@
 import './style.scss'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
@@ -12,6 +12,17 @@ const SignIn: React.FC = () => {
     const {setInfoProperty} = useContext(AppInfoContext)
     const {notifier} = useContext(VisibilityContext)
     const [input, setInput] = useState({email: '', password: ''})
+    const [authToken, setAuthToken] = useState('1')
+
+    useEffect(() => {
+        handleAuthResolve()
+    }, [])
+
+    async function handleAuthResolve() {
+        const token = await localStorage.getItem('token')
+        if (token) navigate('/user/home')
+        else setAuthToken('')
+    }
 
     function handleInput (e:React.ChangeEvent<HTMLInputElement>) {
         setInput({...input, [e.target.name]: e.target.value})
@@ -26,54 +37,59 @@ const SignIn: React.FC = () => {
             setInfoProperty('token', data.id),
             setInfoProperty('userData', data)
         ])
-        if (data.userId === '1') navigate('/user/admin-view')
-        else navigate('/user/user-view')
+        navigate('/user/home')
     }
     
     return (
-        <GridContainer
-           height='100' hUnit='%' 
-        >
-            <CustomContainer
-                padding='4' bgColor='#ffffff' width='45'
-                radius='1.2' bottomPadding='3'
-                shadow='0px 4px 8px 0px rgba(16, 24, 40, 0.1)'
-                className='form-wrapper'
-            >
-                <AppTitle align='center' textSize='2.5' fontWeight='600'>Login</AppTitle>
-                <Form topMargin='3' onSubmit={handleLogin}>
-                    <FormGroup>
-                        <label>Email</label>
-                        <input
-                            placeholder='Enter your email'
-                            type='email'
-                            name='email'
-                            value={input.email}
-                            onChange={handleInput}
-                            required
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <label>Password</label>
-                        <input
-                            placeholder='***********'
-                            type='password'
-                            name='password'
-                            value={input.password}
-                            onChange={handleInput}
-                            required
-                        />
-                    </FormGroup>
-                    <Button
-                        width='100' sizeUnit='%' topMargin='3'
-                        borderColor='#0D968F' titleSize='1.6'
-                        hoverBgColor='#ffffff' hoverColor='#0D968F'
+        <>
+            { !authToken ?
+                <GridContainer
+                    height='100' hUnit='%' 
+                >
+                    <CustomContainer
+                        padding='4' bgColor='#ffffff' width='45'
+                        radius='1.2' bottomPadding='3'
+                        shadow='0px 4px 8px 0px rgba(16, 24, 40, 0.1)'
+                        className='form-wrapper'
                     >
-                        Sign in
-                    </Button>
-                </Form>
-            </CustomContainer>
-        </GridContainer>
+                        <AppTitle align='center' textSize='2.5' fontWeight='600'>Login</AppTitle>
+                        <Form topMargin='3' onSubmit={handleLogin}>
+                            <FormGroup>
+                                <label>Email</label>
+                                <input
+                                    placeholder='Enter your email'
+                                    type='email'
+                                    name='email'
+                                    value={input.email}
+                                    onChange={handleInput}
+                                    required
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <label>Password</label>
+                                <input
+                                    placeholder='***********'
+                                    type='password'
+                                    name='password'
+                                    value={input.password}
+                                    onChange={handleInput}
+                                    required
+                                />
+                            </FormGroup>
+                            <Button
+                                width='100' sizeUnit='%' topMargin='3'
+                                borderColor='#0D968F' titleSize='1.6'
+                                hoverBgColor='#ffffff' hoverColor='#0D968F'
+                            >
+                                Sign in
+                            </Button>
+                        </Form>
+                    </CustomContainer>
+                </GridContainer>
+                :
+                null
+            }
+        </>
     )       
 }
 

@@ -3,16 +3,19 @@ import { useContext, useEffect, useState } from 'react'
 import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
 import ApiContext from 'src/provider/API/call-service'
+import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
 import { AbsoluteContainer, AppSpan, AppText, AppTitle, Button, CustomContainer, FlexColumn, FlexRow, GridContainer } from 'src/style'
 import { UserComparison, UserDetails } from 'src/component'
 import { FiLogOut, FiUser } from 'react-icons/fi'
 import { IUserData } from 'src/model'
 //import {users} from 'src/utils/mockData'
 
-const AdminView: React.FC = () => {
+export const AdminView: React.FC = () => {
     const navigate = useNavigate()
     const {API} = useContext(ApiContext)
+    const {logout} = useContext(AppInfoContext)
     const [users, setUsers] = useState<Array<IUserData>|null>(null)
+    const [isAdmin, setIsAdmin] = useState(false)
     const [toggleInfoDisplay, setToggleInfoDisplay] = useState<any>({})
     const [showComparison, setShowComparison] = useState(false)
 
@@ -25,6 +28,10 @@ const AdminView: React.FC = () => {
         if (response) setUsers(response)
     }
 
+    async function handleLogout() {
+        await logout()
+        navigate('/')
+    }
     
     return (
         <>
@@ -43,7 +50,7 @@ const AdminView: React.FC = () => {
                             width='4' height='4' radius='10' bgColor='#ffffff'
                             hoverBgColor='#FB4E4E' hoverColor='#ffffff'
                             titleSize='2' bottomPadding='0.5' color='#FB4E4E'
-                            onClick={() => navigate('/')}
+                            onClick={handleLogout}
                         >
                             <FiLogOut />
                         </Button>
@@ -118,4 +125,4 @@ const AdminView: React.FC = () => {
     )       
 }
 
-export default utility.routeData('admin-view', 'AdminView', <AdminView/>)
+//export default utility.routeData('admin-view', 'AdminView', <AdminView/>)
