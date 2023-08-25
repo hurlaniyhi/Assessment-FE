@@ -38,10 +38,10 @@ export interface IUser {
 }
 
 export interface IUserData {
-    name: string,
-    numberOfUsers: number,
-    numberOfproducts: number,
-    percentage: number,
+    name?: string,
+    numberOfUsers?: number,
+    numberOfproducts?: number,
+    percentage?: number,
     companyAdminId?: string,
     _id?: string,
     logo?: string

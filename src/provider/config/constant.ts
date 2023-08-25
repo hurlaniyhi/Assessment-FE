@@ -15,3 +15,8 @@ export const initialState = {
 export const appSettings = {
     
 }
+
+export const cloudinaryData = {
+    CLOUND_NAME: 'trustbreed',
+    UPLOAD_PRESET: 'client-upload'
+}

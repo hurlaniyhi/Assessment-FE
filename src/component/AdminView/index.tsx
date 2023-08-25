@@ -1,6 +1,5 @@
 import './style.scss'
 import { useContext, useEffect, useState } from 'react'
-import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
 import ApiContext from 'src/provider/API/call-service'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
@@ -124,5 +123,3 @@ export const AdminView: React.FC = () => {
         </>
     )       
 }
-
-//export default utility.routeData('admin-view', 'AdminView', <AdminView/>)

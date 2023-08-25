@@ -1,2 +1,8 @@
 @import 'src/index.scss';
 
+.file-input {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    position: absolute
+}

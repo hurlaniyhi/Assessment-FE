@@ -1,6 +1,5 @@
 import './style.scss'
 import { useContext, useEffect, useState } from 'react'
-import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
 import ApiContext from 'src/provider/API/call-service'
@@ -95,5 +94,3 @@ export const UserView: React.FC = () => {
         </>
     )       
 }
-
-// export default utility.routeData('user-view', 'UserView', <UserView/>)

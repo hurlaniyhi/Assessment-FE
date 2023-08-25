@@ -4,6 +4,7 @@ import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
 import apiCaller from '../interceptor'
 import { catchErrMsg, erroMessage, requestMessage } from 'src/utils/utility'
 import { IUserData } from 'src/model'
+import axios from 'axios'
 
 
 const ApiContext = React.createContext<any>(null)
@@ -103,11 +104,27 @@ export const ApiProvider = (props: any) => {
         }
     }
 
+    async function uploadToCloudinary (data: any, cloudName: string, id: string) {
+        try {
+            loader(true)
+            const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, data)
+            loader(false)
+            console.log({imageurl: response.data})
+            return updateUserData({_id: id, logo: response.data.secure_url})
+        }
+        catch (err: any) {
+            loader(false)
+            notifier.show(`Document could not be uploaded`)
+            return null
+        }
+    }
+
     const callActions = {
         getUserById,
         getUsers,
         addUserData,
-        updateUserData
+        updateUserData,
+        uploadToCloudinary
     }
 
     return (
