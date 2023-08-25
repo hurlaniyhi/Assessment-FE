@@ -72,7 +72,7 @@ export const UserView: React.FC = () => {
                         </CustomContainer>
                         :
                         <GridContainer>
-                            <AppTitle align='center' textSize='2.5' fontWeight='600'>Hi {userDetails?.name || userData.email}, Welcome</AppTitle>
+                            <AppTitle align='center' textSize='2.5' fontWeight='600'>Hi {userDetails?.name || userData?.email}, Welcome</AppTitle>
                             <Button
                                 width='16' topMargin='3'
                                 borderColor='#0D968F' height='4'
