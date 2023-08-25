@@ -9,7 +9,7 @@ const Home: React.FC = () => {
     const [userType, setUserType] = useState('')
 
     useEffect(() => {
-        setUserType(getUserType(userData.uid))
+        setUserType(getUserType(userData?.uid))
     }, [userData])
 
     return (
