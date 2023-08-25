@@ -1,7 +1,6 @@
 import { ReactElement } from "react"
 import { IUser, RouteData } from "src/model"
 import { userCredentials } from 'src/utils/mockData'
-import access from "./localAccess"
 
 const routeData = (path: string, name: string, component: ReactElement<any, any>): RouteData => {
     return { 
@@ -14,8 +13,7 @@ const routeData = (path: string, name: string, component: ReactElement<any, any>
 }
 
 export const erroMessage = (text: any) => {
-    const isOnline = access.getInternetStatus()
-    return !isOnline ? 'No Internet Connection' : `Message: ${text || 'An error occured'}`
+    return `Message: ${text || 'An error occured'}`
 }
 
 export const requestMessage = (resp: any, text = '') => {
@@ -50,6 +48,22 @@ const mockLogin = (payload: {email: string, password: string}) => {
         isSuccessful,
         data
     }
+}
+
+export const getUserType = (uid: string) => {
+    let userType = 'CLIENT'
+    if (uid === 'xXul3eb1aehjiK6sdulveDpdfNu1') userType = 'ADMIN'
+    return userType
+}
+
+export const getCharToDispay = (character = '', acceptedCharacterLength = 20) => {
+    let result = character
+
+    if (character.length > acceptedCharacterLength) {
+        result = `${result.substring(0, acceptedCharacterLength)}...`
+    }
+
+    return result
 }
 
 export default {

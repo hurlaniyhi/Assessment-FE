@@ -17,7 +17,6 @@ export const SidePopupLayout: React.FC<any> =({children, overflow, close}) => {
                         hoverBgColor='rgba(234, 236, 240, 0.5)'
                         borderColor='none'
                         color='#000000'
-                        //hoverColor='#B42318'
                         onClick={close}
                     >
                         <RiCloseFill style={{fontSize: '2.5rem', marginBottom: '0.3rem'}} />

@@ -18,18 +18,18 @@ export const userCredentials = [
         email: 'user1@gmail.com',
         password: '12345',
         id: '64e758cd8fee49505ba32143',
-        userId: '2'
+        uid: '2'
     },
     {
         email: 'user2@gmail.com',
         password: '12345',
         id: '64e859898b848a51dea85ab5',
-        userId: '3'
+        uid: '3'
     },
     {
         email: 'admin@gmail.com',
         password: '12345',
         id: 'ade758cd8fee49505ba32125',
-        userId: '1'
+        uid: '1'
     }
 ]

@@ -1,7 +1,8 @@
+import './user.scss'
 import { useContext, useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
-import './user.scss'
+import { CustomContainer } from 'src/style'
 
 export const UserRoutes = () => {
     const navigate = useNavigate()
@@ -22,11 +23,9 @@ export const UserRoutes = () => {
     return (
         <>
             { authToken ?
-                <div className="user-container">
-                    <div className="user-modules">
-                        <Outlet/>
-                    </div>
-                </div>
+                <CustomContainer height='100' hUnit='%' overflow='auto'>
+                    <Outlet/>
+                </CustomContainer>
                 :
                 null
             }

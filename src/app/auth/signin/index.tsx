@@ -4,13 +4,15 @@ import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
 import VisibilityContext from 'src/provider/state-manager/visibilityProvider'
-import { AppSpan, AppTitle, Button, CustomContainer, Form, FormGroup, GridContainer } from 'src/style'
+import { AppTitle, Button, CustomContainer, Form, FormGroup, GridContainer } from 'src/style'
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import {auth} from 'src/provider/config/firebase.config'
 
 
 const SignIn: React.FC = () => {
     const navigate = useNavigate()
     const {setInfoProperty} = useContext(AppInfoContext)
-    const {notifier} = useContext(VisibilityContext)
+    const {notifier, loader} = useContext(VisibilityContext)
     const [input, setInput] = useState({email: '', password: ''})
     const [authToken, setAuthToken] = useState('1')
 
@@ -30,14 +32,26 @@ const SignIn: React.FC = () => {
 
     async function handleLogin(e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) {
         e.preventDefault()
-        const {isSuccessful, data} = await utility.mockLogin(input)
-        if (!isSuccessful) return notifier.show('Invalid email or password')
 
-        await Promise.all([
-            setInfoProperty('token', data.id),
-            setInfoProperty('userData', data)
-        ])
-        navigate('/user/home')
+        try {
+            loader(true)
+            const {user} = await signInWithEmailAndPassword(auth, input.email, input.password)
+            loader(false)
+            if (user) {
+                console.log({userDetails: user})
+                const token = await user.getIdToken()
+                await Promise.all([
+                    setInfoProperty('token', token),
+                    setInfoProperty('userData', user)
+                ])
+                navigate('/user/home')
+            }
+        }
+        catch (err: any) {
+            loader(false)
+            console.log({firebaseError: err.message})
+            notifier.show(err.message)
+        }
     }
     
     return (

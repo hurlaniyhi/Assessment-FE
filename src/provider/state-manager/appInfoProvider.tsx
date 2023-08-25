@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react'
-import { Action, KeyValuePayload } from '../../model'
+import { Action, KeyValuePayload } from 'src/model'
 
 
 const AppInfoContext = React.createContext<any>(null)
@@ -42,14 +42,13 @@ export const AppInfoProvider = (props: any) => {
     }
 
     async function recoverStatesData () {
-        await Promise.all([
-            recoverAppData(), // other context state recovering method will be import and added here
-        ])
+        recoverAppData()
     }
 
     async function logout () {
         await Promise.all([
-            localStorage.clear(), clearAppData() // other context state clearing method will be import and added here
+            localStorage.clear(), 
+            clearAppData()
         ])
     }
   

@@ -1,6 +1,6 @@
 import './style.scss'
 import { useContext, useEffect, useState } from 'react';
-import utility from 'src/utils/utility'
+import utility, { getUserType } from 'src/utils/utility'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider';
 import { AdminView, UserView } from 'src/component';
 
@@ -9,13 +9,13 @@ const Home: React.FC = () => {
     const [userType, setUserType] = useState('')
 
     useEffect(() => {
-        setUserType(userData.userId)
+        setUserType(getUserType(userData.uid))
     }, [userData])
 
     return (
         <>
             {
-                userType === '1' ?
+                userType === 'ADMIN' ?
                     <AdminView />
                     : userType ? 
                         <UserView />

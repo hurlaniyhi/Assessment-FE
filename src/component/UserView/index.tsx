@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
 import ApiContext from 'src/provider/API/call-service'
 import { AbsoluteContainer, AppTitle, Button, CustomContainer, GridContainer } from 'src/style'
-import { AddDetails, UserDetails } from 'src/component'
+import { UserDetails } from 'src/component'
+import { AddDetails } from 'src/popup'
 import { FiLogOut } from 'react-icons/fi'
 import { IUserData } from '@src/model'
 
@@ -17,11 +18,11 @@ export const UserView: React.FC = () => {
     const [showAddDetails, setShowAddDetails] = useState(false)
 
     useEffect(() => {
-        if (userData?.id) handleFetchUserDetails()
+        if (userData?.uid) handleFetchUserDetails()
     }, [userData])
 
     async function handleFetchUserDetails() {
-        const response = await API.getUserById(userData?.id)
+        const response = await API.getUserByAdminId(userData?.uid)
         if (response) setUserDetails(response)
     }
 

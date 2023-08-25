@@ -3,15 +3,30 @@ import ApiContext from "src/provider/API/call-service"
 import AppInfoContext from "src/provider/state-manager/appInfoProvider"
 import { AppTitle, Button, CustomContainer, Form, FormGroup, GridContainer } from "src/style"
 import { SidePopupLayout } from "src/component"
+import { IUserData } from "@src/model"
 
 export const AddDetails: React.FC<any> = ({data, getCurrentData, close}) => {
     const {API} = useContext(ApiContext)
     const {info: {userData}} = useContext(AppInfoContext)
-    const [input, setInput] = useState({name: '', numberOfUsers: '', numberOfProducts: '', percentage: ''})
+    const [input, setInput] = useState({
+        name: '', numberOfUsers: '', 
+        numberOfProducts: '', percentage: ''
+    })
     
     useEffect(() => {
         if (data) setInput(data)
     }, [])
+
+    useEffect(() => {
+        const {numberOfProducts, numberOfUsers} = input
+        if (numberOfProducts && numberOfUsers) {
+            const percentage = ((Number(numberOfProducts) / Number(numberOfUsers)) * 100).toFixed(3)
+            setInput({
+                ...input, 
+                percentage: String(percentage)
+            })
+        }
+    }, [input.numberOfUsers, input.numberOfProducts])
 
     function handleInput (e:React.ChangeEvent<HTMLInputElement>) {
         setInput({...input, [e.target.name]: e.target.value})
@@ -21,7 +36,7 @@ export const AddDetails: React.FC<any> = ({data, getCurrentData, close}) => {
         e.preventDefault()
         const response = data ? 
             await API.updateUserData(input)
-            : await API.addUserData({...input, companyAdminId: userData.userId})
+            : await API.addUserData({...input, companyAdminId: userData.uid})
 
         if (response) getCurrentData(response)
         close()
@@ -72,6 +87,7 @@ export const AddDetails: React.FC<any> = ({data, getCurrentData, close}) => {
                             name='percentage'
                             value={input.percentage}
                             onChange={handleInput}
+                            disabled
                             required
                         />
                     </FormGroup>

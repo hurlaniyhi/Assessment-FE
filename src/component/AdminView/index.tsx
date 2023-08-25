@@ -3,8 +3,12 @@ import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ApiContext from 'src/provider/API/call-service'
 import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
-import { AbsoluteContainer, AppSpan, AppText, AppTitle, Button, CustomContainer, FlexColumn, FlexRow, GridContainer } from 'src/style'
-import { UserComparison, UserDetails } from 'src/component'
+import { 
+    AbsoluteContainer, AppSpan, AppText, AppTitle, 
+    Button, CustomContainer, FlexColumn, FlexRow, GridContainer 
+} from 'src/style'
+import { UserDetails } from 'src/component'
+import { UserComparison } from 'src/popup'
 import { FiLogOut, FiUser } from 'react-icons/fi'
 import { IUserData } from 'src/model'
 //import {users} from 'src/utils/mockData'
@@ -14,7 +18,6 @@ export const AdminView: React.FC = () => {
     const {API} = useContext(ApiContext)
     const {logout} = useContext(AppInfoContext)
     const [users, setUsers] = useState<Array<IUserData>|null>(null)
-    const [isAdmin, setIsAdmin] = useState(false)
     const [toggleInfoDisplay, setToggleInfoDisplay] = useState<any>({})
     const [showComparison, setShowComparison] = useState(false)
 

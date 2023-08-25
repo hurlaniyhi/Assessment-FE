@@ -1,7 +1,7 @@
+import './style.scss'
 import { useContext, useEffect, useState } from 'react'
 import { NotifierContainer } from './style'
 import VisibilityContext from 'src/provider/state-manager/visibilityProvider'
-import './style.scss'
 import { AppText, CustomContainer, FlexRow, Circle, AppSpan, Button } from 'src/style'
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
 import { RiCloseFill } from 'react-icons/ri'

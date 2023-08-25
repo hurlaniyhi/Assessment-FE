@@ -1,6 +1,6 @@
 import { AppSpan, AppText, AppTitle, CustomContainer, FlexRow, GridContainer } from "src/style"
 import { SidePopupLayout } from "src/component"
-import { countFormat } from "src/utils/utility"
+import { countFormat, getCharToDispay } from "src/utils/utility"
 
 export const UserComparison: React.FC<any> = ({data, close}) => {
 
@@ -51,7 +51,7 @@ export const UserComparison: React.FC<any> = ({data, close}) => {
                                     bgColor="#E7F6F5" borderColor="#0D968F"
                                     bottomMargin="2"
                                 >
-                                    <AppText color="#085B56" fontWeight="600">{data[0]?.name}</AppText>
+                                    <AppText color="#085B56" fontWeight="600">{getCharToDispay(data[0]?.name, 18)}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" minHeight="5" bottomMargin="2"
@@ -81,7 +81,7 @@ export const UserComparison: React.FC<any> = ({data, close}) => {
                                 <GridContainer 
                                     padding="1" minHeight="5" bottomMargin="2"
                                 >
-                                    <AppText color="#0D968F" fontWeight="600" textSize="2">{data[1]?.name}</AppText>
+                                    <AppText color="#0D968F" fontWeight="600">{getCharToDispay(data[1]?.name, 18)}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" radius="0.8" minHeight="5"

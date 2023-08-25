@@ -1,5 +1,5 @@
 export * from './Loader'
-export * from './Popups'
+export * from './ActivityStatus'
 export * from './Notifier'
 export * from './UserDetails'
 export * from './SidePopupLayout'

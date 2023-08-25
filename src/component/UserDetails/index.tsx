@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import AppInfoContext from "src/provider/state-manager/appInfoProvider"
 import { 
     AbsoluteContainer, AppSpan, AppText, Circle, 
@@ -8,21 +8,23 @@ import { BsCamera } from 'react-icons/bs'
 //import NoImg from 'src/assets/img/no-img.jpeg'
 import UserIcon from 'src/assets/svg/user-icon'
 import HandIcon from 'src/assets/svg/hand-icon'
-import { countFormat } from "src/utils/utility"
+import { countFormat, getUserType } from "src/utils/utility"
 import { cloudinaryData } from "src/provider/config/constant"
 import ApiContext from "src/provider/API/call-service"
+
 
 export const UserDetails: React.FC<any> = ({data}) => {
     const {API} = useContext(ApiContext)
     const {info} = useContext(AppInfoContext)
-    const [userData, setUserData] = useState(data)
+    const [userData, setUserData] = useState<any>(null)
     const logoRef = useRef<any>(null)
+
+    useEffect(() => {
+        setUserData(data)
+    }, [data])
 
     async function handleFile (e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.files instanceof FileList) {
-            //setInput(URL.createObjectURL(e.target.files[0]))
-            console.log({fileName: e.target.value})
-            
             const formData = new FormData()
             formData.append('file', e.target.files[0])
             formData.append('upload_preset', cloudinaryData.UPLOAD_PRESET)
@@ -41,10 +43,10 @@ export const UserDetails: React.FC<any> = ({data}) => {
                 onClick={() => logoRef.current.click()}
             >
                 { userData?.logo ?
-                    <Icon src={userData.logo} noResize minWidth='100' style={{objectFit: 'cover'}}/>
-                    : ( info.userData.userId === '1' && <AppSpan>Click to Upload</AppSpan>)
+                    <Icon src={userData.logo} minWidth='100' style={{objectFit: 'cover'}}/>
+                    : (getUserType(info.userData.uid) === 'ADMIN' && <AppSpan>Click to Upload</AppSpan>)
                 }
-                { info.userData.userId === '1' &&
+                { getUserType(info.userData.uid) === 'ADMIN' &&
                     <>
                         <AbsoluteContainer 
                             height="full" width="100" sizeUnit="%" 

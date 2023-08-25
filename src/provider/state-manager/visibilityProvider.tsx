@@ -25,10 +25,6 @@ export const VisibilityProvider = (props: any) => {
         await dispatch({type: "set-visibility", payload: {key: 'isLoading', value }})
     }
 
-    async function showSideBar (value: boolean) {
-        await dispatch({type: "set-visibility", payload: {key: 'isSideBar', value }})
-    }
-
     const notifier = {
         show: async function (message: string, title = null, type?: string) {
             const messageType = type ? type.toLowerCase() : 'error'
@@ -40,32 +36,18 @@ export const VisibilityProvider = (props: any) => {
         }
     }
 
-    async function updateSelectedMenu (value: string) {
-        await dispatch({type: "set-visibility", payload: {key: 'selectedMenu', value }})
-        await localStorage.setItem('selectedMenu', value)
-    }
-
-    const decisionBox = {
-        show: async function (message: string, yesMethod: any, noMethod: any, yesBtnText = 'Yes', cancelBtnText = 'Cancel') {
-            await dispatch({type: "set-visibility", payload: {key: 'decision', value: {status: true, message, yesMethod, noMethod, yesBtnText, cancelBtnText} }})
-        },
-        hide: async function () {
-            await dispatch({type: "set-visibility", payload: {key: 'decision', value: {...state.decision, status: false, }}})
-        }
-    }
-
-    async function isConnected (value: boolean) {
-        await dispatch({type: "set-visibility", payload: {key: 'isOnline', value }})
-    }
-  
+    // const decisionBox = {
+    //     show: async function (message: string, yesMethod: any, noMethod: any, yesBtnText = 'Yes', cancelBtnText = 'Cancel') {
+    //         await dispatch({type: "set-visibility", payload: {key: 'decision', value: {status: true, message, yesMethod, noMethod, yesBtnText, cancelBtnText} }})
+    //     },
+    //     hide: async function () {
+    //         await dispatch({type: "set-visibility", payload: {key: 'decision', value: {...state.decision, status: false, }}})
+    //     }
+    // }
 
     const stateActions = {
         loader,
-        showSideBar,
-        notifier,
-        updateSelectedMenu,
-        decisionBox,
-        isConnected
+        notifier
     }
 
     return (

@@ -1,6 +1,6 @@
+import './index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
 import { VisibilityProvider } from './provider/state-manager/visibilityProvider';
 import {ApiProvider} from './provider/API/call-service'
 import { AppInfoProvider } from './provider/state-manager/appInfoProvider';

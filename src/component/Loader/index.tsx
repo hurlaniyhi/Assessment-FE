@@ -1,6 +1,6 @@
+import './style.scss'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { TailSpin } from  'react-loader-spinner'
-import './style.scss'
 
 export const Loader: React.FC = () => {
     return (

@@ -6,18 +6,41 @@ import { catchErrMsg, erroMessage, requestMessage } from 'src/utils/utility'
 import { IUserData } from 'src/model'
 import axios from 'axios'
 
-
 const ApiContext = React.createContext<any>(null)
 
 export const ApiProvider = (props: any) => {
     const {loader, notifier} = useContext(VisibilityContext)
-    const {info, setInfoProperty} = useContext(AppInfoContext)
+    const {setInfoProperty} = useContext(AppInfoContext)
    
     async function getUserById(id: number) {
         try {
             loader(true)
             const { data } = await apiCaller.get('fetchCompanyById', {
                 params: {id}
+            })
+            loader(false)
+
+            if (data.status === 'error') {
+                notifier.show(requestMessage(data))
+                return null
+            }
+            else {
+                setInfoProperty('profile', data.data)
+                return data.data
+            }
+        }
+        catch (err: any) {
+            loader(false)
+            notifier.show(erroMessage(catchErrMsg(err)))
+            return null
+        }
+    }
+
+    async function getUserByAdminId(adminId: number) {
+        try {
+            loader(true)
+            const { data } = await apiCaller.get('fetchCompanyByAdminId', {
+                params: {adminId}
             })
             loader(false)
 
@@ -71,6 +94,7 @@ export const ApiProvider = (props: any) => {
             }
             else {
                 setInfoProperty('profile', data.data)
+                notifier.show(data.message, null, 'success')
                 return data.data
             }
         }
@@ -94,6 +118,7 @@ export const ApiProvider = (props: any) => {
             }
             else {
                 setInfoProperty('profile', data.data)
+                notifier.show(data.message, null, 'success')
                 return data.data
             }
         }
@@ -121,6 +146,7 @@ export const ApiProvider = (props: any) => {
 
     const callActions = {
         getUserById,
+        getUserByAdminId,
         getUsers,
         addUserData,
         updateUserData,

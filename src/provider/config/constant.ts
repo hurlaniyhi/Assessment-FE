@@ -1,19 +1,9 @@
-let isLive = false;
+let isLive = true;
 
 export const url = {
-    BASE_URL: isLive ? '' : 'http://localhost:5000/api'
-}
-
-export const endpoints = {
-   
-}
-
-export const initialState = {
-   
-}
-
-export const appSettings = {
-    
+    BASE_URL: isLive ? 
+    'https://my-assessment-server.vercel.app/api' 
+    : 'http://localhost:5000/api'
 }
 
 export const cloudinaryData = {
