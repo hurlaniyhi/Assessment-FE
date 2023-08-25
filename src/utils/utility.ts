@@ -1,5 +1,6 @@
 import { ReactElement } from "react"
-import { RouteData } from "src/model"
+import { IUser, RouteData } from "src/model"
+import { userCredentials } from 'src/utils/mockData'
 import access from "./localAccess"
 
 const routeData = (path: string, name: string, component: ReactElement<any, any>): RouteData => {
@@ -10,23 +11,6 @@ const routeData = (path: string, name: string, component: ReactElement<any, any>
         },
         name
     }
-}
-
-const toTitleCase = (text: string) => {
-    text = text.toLowerCase()
-    return text[0].toUpperCase() + text.substring(1, text.length)
-}
-
-const splitCamelCase = (text: string, isTitleCase?: boolean) => {
-    let result = text.replace(/([a-z])([A-Z])/g, '$1 $2')
-    result = isTitleCase ? result[0].toUpperCase() + result.substring(1) : result 
-    return result
-}
-
-const getPageTitle = () => {
-    let route = toTitleCase(window.location.href.split('/').pop()!)
-    let pageTitle = route ? route.split('-').join(' ') : 'Hydra'
-    return pageTitle
 }
 
 export const erroMessage = (text: any) => {
@@ -45,12 +29,30 @@ export const catchErrMsg = (err: any) => {
     return message 
 }
 
+export const countFormat = (val: number|string) => {
+    var formatter = new Intl.NumberFormat('en-US')
+    return formatter.format(Number(val))
+}
+
+const mockLogin = (payload: {email: string, password: string}) => {
+    let isSuccessful = false
+    let data = <IUser>{};
+
+    for (let user of userCredentials) {
+        if (user.email === payload.email && user.password === payload.password) {
+            data = user
+            isSuccessful = true
+            break
+        }
+    }
+    
+    return {
+        isSuccessful,
+        data
+    }
+}
+
 export default {
     routeData,
-    toTitleCase,
-    getPageTitle,
-    requestMessage,
-    catchErrMsg,
-    erroMessage,
-    splitCamelCase
+    mockLogin
 }

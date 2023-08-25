@@ -1,7 +1,9 @@
 import { AppSpan, AppText, AppTitle, CustomContainer, FlexRow, GridContainer } from "src/style"
 import { SidePopupLayout } from "src/component"
+import { countFormat } from "src/utils/utility"
 
 export const UserComparison: React.FC<any> = ({data, close}) => {
+
     return (
         <SidePopupLayout close={close}>
             <CustomContainer>
@@ -49,24 +51,24 @@ export const UserComparison: React.FC<any> = ({data, close}) => {
                                     bgColor="#E7F6F5" borderColor="#0D968F"
                                     bottomMargin="2"
                                 >
-                                    <AppText color="#085B56" fontWeight="600">Appzone</AppText>
+                                    <AppText color="#085B56" fontWeight="600">{data[0]?.name}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" minHeight="5" bottomMargin="2"
                                 >
-                                    <AppText color="#0D968F" fontWeight="600" textSize="2">28</AppText>
+                                    <AppText color="#0D968F" fontWeight="600" textSize="2">{countFormat(data[0]?.numberOfUsers)}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" radius="0.8" minHeight="5"
                                     bgColor="#E7F6F5" borderColor="#0D968F"
                                     bottomMargin="2"
                                 >
-                                    <AppText color="#085B56" fontWeight="600">5</AppText>
+                                    <AppText color="#085B56" fontWeight="600">{countFormat(data[0]?.numberOfProducts)}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" minHeight="5" bottomMargin="2"
                                 >
-                                    <AppText color="#344054" fontWeight="600" textSize="2">70%</AppText>
+                                    <AppText color="#344054" fontWeight="600" textSize="2">{data[0]?.percentage}%</AppText>
                                 </GridContainer>
                             </CustomContainer>
                         </CustomContainer>
@@ -79,26 +81,26 @@ export const UserComparison: React.FC<any> = ({data, close}) => {
                                 <GridContainer 
                                     padding="1" minHeight="5" bottomMargin="2"
                                 >
-                                    <AppText color="#0D968F" fontWeight="600">Flutterwave</AppText>
+                                    <AppText color="#0D968F" fontWeight="600" textSize="2">{data[1]?.name}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" radius="0.8" minHeight="5"
                                     bgColor="#E7F6F5" borderColor="#0D968F"
                                     bottomMargin="2"
                                 >
-                                    <AppText color="#085B56">12</AppText>
+                                    <AppText color="#085B56">{countFormat(data[1]?.numberOfUsers)}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" minHeight="5" bottomMargin="2"
                                 >
-                                    <AppText color="#0D968F" fontWeight="600" textSize="2">4</AppText>
+                                    <AppText color="#0D968F" fontWeight="600" textSize="2">{countFormat(data[1]?.numberOfProducts)}</AppText>
                                 </GridContainer>
                                 <GridContainer 
                                     padding="1" radius="0.8" minHeight="5"
                                     bgColor="#E7F6F5" borderColor="#0D968F"
                                     bottomMargin="2"
                                 >
-                                    <AppText color="#085B56">84%</AppText>
+                                    <AppText color="#085B56">{data[1]?.percentage}%</AppText>
                                 </GridContainer>
                             </CustomContainer>
                         </CustomContainer>

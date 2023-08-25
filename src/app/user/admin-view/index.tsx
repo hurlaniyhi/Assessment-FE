@@ -1,18 +1,30 @@
 import './style.scss'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
+import ApiContext from 'src/provider/API/call-service'
 import { AbsoluteContainer, AppSpan, AppText, AppTitle, Button, CustomContainer, FlexColumn, FlexRow, GridContainer } from 'src/style'
-import { AddDetails, UserComparison, UserDetails } from 'src/component'
+import { UserComparison, UserDetails } from 'src/component'
 import { FiLogOut, FiUser } from 'react-icons/fi'
-import {users} from 'src/utils/mockData'
-
+import { IUserData } from 'src/model'
+//import {users} from 'src/utils/mockData'
 
 const AdminView: React.FC = () => {
     const navigate = useNavigate()
-    const [userData, setUserData] = useState<any>([])
+    const {API} = useContext(ApiContext)
+    const [users, setUsers] = useState<Array<IUserData>|null>(null)
     const [toggleInfoDisplay, setToggleInfoDisplay] = useState<any>({})
     const [showComparison, setShowComparison] = useState(false)
+
+    useEffect(() => {
+        handleFetchUsers()
+    }, [])
+
+    async function handleFetchUsers() {
+        const response = await API.getUsers()
+        if (response) setUsers(response)
+    }
+
     
     return (
         <>
@@ -47,7 +59,7 @@ const AdminView: React.FC = () => {
                             className='user-list-content-wrapper'
                         >   
                             {
-                                users?.map((item, index) => {
+                                users?.map((item: IUserData, index: number) => {
                                     const bgColor = toggleInfoDisplay[index] ? '#E7F6F5' : '#ffffff'
                                     const borderColor = toggleInfoDisplay[index] ? '#0D968F' : '#EAECF0'
                                     const color = toggleInfoDisplay[index] ? '#085B56' : '#344054'

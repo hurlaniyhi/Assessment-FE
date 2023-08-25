@@ -1,14 +1,33 @@
 import './style.scss'
+import { useContext, useState } from 'react'
 import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
+import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
+import VisibilityContext from 'src/provider/state-manager/visibilityProvider'
 import { AppSpan, AppTitle, Button, CustomContainer, Form, FormGroup, GridContainer } from 'src/style'
 
 
 const SignIn: React.FC = () => {
     const navigate = useNavigate()
+    const {setInfoProperty} = useContext(AppInfoContext)
+    const {notifier} = useContext(VisibilityContext)
+    const [input, setInput] = useState({email: '', password: ''})
 
-    function handleLogin() {
-        navigate('/user/user-view')
+    function handleInput (e:React.ChangeEvent<HTMLInputElement>) {
+        setInput({...input, [e.target.name]: e.target.value})
+    }
+
+    async function handleLogin(e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) {
+        e.preventDefault()
+        const {isSuccessful, data} = await utility.mockLogin(input)
+        if (!isSuccessful) return notifier.show('Invalid email or password')
+
+        await Promise.all([
+            setInfoProperty('token', data.id),
+            setInfoProperty('userData', data)
+        ])
+        if (data.userId === '1') navigate('/user/admin-view')
+        else navigate('/user/user-view')
     }
     
     return (
@@ -27,14 +46,22 @@ const SignIn: React.FC = () => {
                         <label>Email</label>
                         <input
                             placeholder='Enter your email'
+                            type='email'
                             name='email'
+                            value={input.email}
+                            onChange={handleInput}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>
                         <label>Password</label>
                         <input
                             placeholder='***********'
+                            type='password'
                             name='password'
+                            value={input.password}
+                            onChange={handleInput}
+                            required
                         />
                     </FormGroup>
                     <Button

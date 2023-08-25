@@ -4,7 +4,7 @@ import { Action, KeyValuePayload } from '../../model'
 
 const AppInfoContext = React.createContext<any>(null)
 const initialState = {
-    token: '', userData: {}
+    token: '', userData: {}, profile: {}, companies: {}
 }
 
 const AppInfoReducer = (state: any, action: Action<KeyValuePayload>) => {

@@ -1,38 +1,78 @@
+import { useContext, useEffect, useState } from "react"
+import ApiContext from "src/provider/API/call-service"
+import AppInfoContext from "src/provider/state-manager/appInfoProvider"
 import { AppTitle, Button, CustomContainer, Form, FormGroup, GridContainer } from "src/style"
 import { SidePopupLayout } from "src/component"
 
-export const AddDetails: React.FC<any> = ({data, close}) => {
+export const AddDetails: React.FC<any> = ({data, getCurrentData, close}) => {
+    const {API} = useContext(ApiContext)
+    const {info: {userData}} = useContext(AppInfoContext)
+    const [input, setInput] = useState({name: '', numberOfUsers: '', numberOfProducts: '', percentage: ''})
+    
+    useEffect(() => {
+        if (data) setInput(data)
+    }, [])
+
+    function handleInput (e:React.ChangeEvent<HTMLInputElement>) {
+        setInput({...input, [e.target.name]: e.target.value})
+    }
+
+    async function handleSubmit(e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) {
+        e.preventDefault()
+        const response = data ? 
+            await API.updateUserData(input)
+            : await API.addUserData({...input, companyAdminId: userData.userId})
+
+        if (response) getCurrentData(response)
+        close()
+    }
+
     return (
         <SidePopupLayout close={close}>
             <AppTitle textSize="2.2" fontWeight="700">{data ? 'Update' : 'Add'} Company Details</AppTitle>
             <CustomContainer topMargin="2.5">
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <label>Name</label>
                         <input
-                            placeholder='Enter your email'
-                            name='email'
+                            placeholder='Enter Name'
+                            name='name'
+                            value={input.name}
+                            onChange={handleInput}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>
                         <label>Number Of Users</label>
                         <input
                             placeholder='Enter your No. of Users'
+                            type='number'
                             name='numberOfUsers'
+                            value={input.numberOfUsers}
+                            onChange={handleInput}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>
                         <label>Number Of Products</label>
                         <input
                             placeholder='Enter your No. of Products'
+                            type='number'
                             name='numberOfProducts'
+                            value={input.numberOfProducts}
+                            onChange={handleInput}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>
                         <label>Percentage</label>
                         <input
-                            placeholder='Enter your No. of Products'
-                            name='numberOfProducts'
+                            placeholder='Enter Percentage'
+                            type='number'
+                            name='percentage'
+                            value={input.percentage}
+                            onChange={handleInput}
+                            required
                         />
                     </FormGroup>
                     <GridContainer alignItems="end">

@@ -21,11 +21,28 @@ export interface KeyValuePayload {
 }
 
 export interface AuthModel {
-    username: string,
+    email: string,
     password: string,
 }
 
 export interface ValidatorResponse {
     isValidated: boolean,
     message: string
+}
+
+export interface IUser {
+    email: string,
+    password: string,
+    id: string,
+    userId: string
+}
+
+export interface IUserData {
+    name: string,
+    numberOfUsers: number,
+    numberOfproducts: number,
+    percentage: number,
+    companyAdminId?: string,
+    _id?: string,
+    logo?: string
 }

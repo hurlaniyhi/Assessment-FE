@@ -1,16 +1,35 @@
 import './style.scss'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import utility from 'src/utils/utility'
 import { useNavigate } from 'react-router-dom'
+import AppInfoContext from 'src/provider/state-manager/appInfoProvider'
+import ApiContext from 'src/provider/API/call-service'
 import { AbsoluteContainer, AppTitle, Button, CustomContainer, GridContainer } from 'src/style'
 import { AddDetails, UserDetails } from 'src/component'
 import { FiLogOut } from 'react-icons/fi'
+import { IUserData } from '@src/model'
 
 
 const UserView: React.FC = () => {
     const navigate = useNavigate()
-    const [userData, setUserData] = useState<any>([])
+    const {API} = useContext(ApiContext)
+    const {info: {userData}, logout} = useContext(AppInfoContext)
+    const [userDetails, setUserDetails] = useState<any>(null)
     const [showAddDetails, setShowAddDetails] = useState(false)
+
+    useEffect(() => {
+        if (userData?.id) handleFetchUserDetails()
+    }, [userData])
+
+    async function handleFetchUserDetails() {
+        const response = await API.getUserById(userData?.id)
+        if (response) setUserDetails(response)
+    }
+
+    async function handleLogout() {
+        await logout()
+        navigate('/')
+    }
     
     return (
         <>
@@ -29,16 +48,16 @@ const UserView: React.FC = () => {
                             width='4' height='4' radius='10' bgColor='#ffffff'
                             hoverBgColor='#FB4E4E' hoverColor='#ffffff'
                             titleSize='2' bottomPadding='0.5' color='#FB4E4E'
-                            onClick={() => navigate('/')}
+                            onClick={handleLogout}
                         >
                             <FiLogOut />
                         </Button>
                     </AbsoluteContainer>
-                    { userData ?
+                    { userDetails ?
                         <CustomContainer>
                             <AppTitle align='center' textSize='2.5' fontWeight='600'>My Account</AppTitle>
                             <CustomContainer topMargin='2'>
-                                <UserDetails/>
+                                <UserDetails data={userDetails}/>
                                 <GridContainer>
                                     <Button
                                         width='10' topMargin='3'
@@ -53,9 +72,9 @@ const UserView: React.FC = () => {
                         </CustomContainer>
                         :
                         <GridContainer>
-                            <AppTitle align='center' textSize='2.5' fontWeight='600'>Hi, Ridwan, Welcome</AppTitle>
+                            <AppTitle align='center' textSize='2.5' fontWeight='600'>Hi {userDetails?.name || userData.email}, Welcome</AppTitle>
                             <Button
-                                width='15' topMargin='3'
+                                width='16' topMargin='3'
                                 borderColor='#0D968F' height='4'
                                 hoverBgColor='#ffffff' hoverColor='#0D968F'
                                 onClick={() => setShowAddDetails(true)}
@@ -68,7 +87,8 @@ const UserView: React.FC = () => {
             </GridContainer>
             { showAddDetails &&
                 <AddDetails
-                    data={userData}
+                    data={userDetails}
+                    getCurrentData={(data: IUserData) => setUserDetails(data)}
                     close={() => setShowAddDetails(false)}
                 />
             }

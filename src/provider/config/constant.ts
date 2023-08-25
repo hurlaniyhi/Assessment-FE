@@ -1,11 +1,7 @@
 let isLive = false;
 
-export const images = {
-    PRIMUS_PLUS_LOGO: require('../../assets/img/logo_header.png'),
-}
-
 export const url = {
-    BASE_URL: isLive ? '' : 'https://example.com'
+    BASE_URL: isLive ? '' : 'http://localhost:5000/api'
 }
 
 export const endpoints = {
