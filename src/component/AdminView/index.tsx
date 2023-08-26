@@ -16,7 +16,7 @@ import { IUserData } from 'src/model'
 export const AdminView: React.FC = () => {
     const navigate = useNavigate()
     const {API} = useContext(ApiContext)
-    const {logout} = useContext(AppInfoContext)
+    const {logout, info: {userData}} = useContext(AppInfoContext)
     const [users, setUsers] = useState<Array<IUserData>|null>(null)
     const [toggleInfoDisplay, setToggleInfoDisplay] = useState<any>({})
     const [showComparison, setShowComparison] = useState(false)
@@ -62,7 +62,7 @@ export const AdminView: React.FC = () => {
                         <AppSpan color='rgba(0,0,0, 0.5)'>Click a user to view details</AppSpan>     
                     </GridContainer>
                        
-                    { users ?
+                    { users?.length ?
                         <CustomContainer 
                             topMargin='2' bottomMargin='2' overflow='auto'
                             className='user-list-content-wrapper'
@@ -114,7 +114,7 @@ export const AdminView: React.FC = () => {
                         </CustomContainer>
                         :
                         <FlexColumn minHeight='40'>
-                            <AppTitle align='center' textSize='2.5' fontWeight='600'>Hi, Ridwan, Welcome</AppTitle>
+                            <AppTitle align='center' textSize='2.5' fontWeight='600'>Hi {userData.email}, Welcome</AppTitle>
                             <AppSpan color='rgba(0,0,0, 0.5)'>No user record is found</AppSpan>
                         </FlexColumn>
                     }
