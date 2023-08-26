@@ -90,7 +90,10 @@ export const AdminView: React.FC = () => {
                                             </GridContainer>
                                             { toggleInfoDisplay[index] &&
                                                 <CustomContainer topMargin='2' bottomMargin='2'>
-                                                    <UserDetails data={item}/>
+                                                    <UserDetails 
+                                                        data={item}
+                                                        fetchUpdate={handleFetchUsers}
+                                                    />
                                                 </CustomContainer>
                                             }
                                         </CustomContainer>

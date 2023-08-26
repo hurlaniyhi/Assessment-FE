@@ -13,7 +13,7 @@ import { cloudinaryData } from "src/provider/config/constant"
 import ApiContext from "src/provider/API/call-service"
 
 
-export const UserDetails: React.FC<any> = ({data}) => {
+export const UserDetails: React.FC<any> = ({data, fetchUpdate}) => {
     const {API} = useContext(ApiContext)
     const {info} = useContext(AppInfoContext)
     const [userData, setUserData] = useState<any>(null)
@@ -31,7 +31,10 @@ export const UserDetails: React.FC<any> = ({data}) => {
             formData.append('cloud_name', cloudinaryData.CLOUND_NAME)
 
             const updatedData = await API.uploadToCloudinary(formData, cloudinaryData.CLOUND_NAME, data?._id)
-            if (updatedData) setUserData(updatedData)
+            if (updatedData) {
+                //setUserData(updatedData)
+                if (fetchUpdate) fetchUpdate()
+            }
         }
     }
     
@@ -43,7 +46,7 @@ export const UserDetails: React.FC<any> = ({data}) => {
                 onClick={() => logoRef.current.click()}
             >
                 { userData?.logo ?
-                    <Icon src={userData.logo} minWidth='100' style={{objectFit: 'cover'}}/>
+                    <Icon src={userData.logo} minWidth='100' noResize style={{objectFit: 'cover'}}/>
                     : (getUserType(info.userData.uid) === 'ADMIN' && <AppSpan>Click to Upload</AppSpan>)
                 }
                 { getUserType(info.userData.uid) === 'ADMIN' &&
